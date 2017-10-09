@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reserve">
+	<resultMap type="beautynote.common.vo.ReserveVO" id="reserve">
+		<result property="dates" column="DATES"/>
+		<result property="startTime" column="START_TIME"/>
+		<result property="endTime" column="END_TIME"/>
+		<result property="cusId" column="CUS_ID"/>
+		<result property="name" column="NAME"/>
+		<result property="bigo" column="BIGO"/>
+	</resultMap>
+
+    <select id="selReserve" resultMap="reserve">
+        SELECT R.DATES
+		     , R.START_TIME
+		     , R.END_TIME
+		     , R.CUS_ID
+		     , C.NAME
+		     , R.BIGO
+		  FROM RESERVE R
+		 INNER JOIN CUSTOMER C
+		    ON R.CUS_ID = C.CUS_ID
+		 WHERE R.DATES = TO_CHAR(SYSDATE, 'YYYYMMDD')
+		 ORDER BY R.START_TIME
+    </select>
+</mapper>
